@@ -3,6 +3,7 @@ import getFlights from '../api/getFlights';
 export const FETCH_FLIGHTS = 'FETCH_FLIGHTS';
 export const FETCH_FLIGHTS_SUCCESS = `${FETCH_FLIGHTS}_SUCCESS`;
 export const FETCH_FLIGHTS_FAIL = `${FETCH_FLIGHTS}_FAIL`;
+export const CHANGE_CARRIER = 'CHANGE_CARRIER';
 
 export const requestFlights = payload => ({
   type: FETCH_FLIGHTS,
@@ -25,3 +26,8 @@ export const fetchFlights = () => (dispatch) => {
     .then(data => dispatch(receiveFlights(data)))
     .catch(error => dispatch(failFlights(error)));
 };
+
+export const changeCarrier = payload => ({
+  type: CHANGE_CARRIER,
+  payload,
+});

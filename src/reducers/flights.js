@@ -1,7 +1,10 @@
-import { FETCH_FLIGHTS, FETCH_FLIGHTS_SUCCESS, FETCH_FLIGHTS_FAIL } from '../actions/flights';
+import {
+  FETCH_FLIGHTS, FETCH_FLIGHTS_SUCCESS, FETCH_FLIGHTS_FAIL, CHANGE_CARRIER,
+} from '../actions/flights';
 
 const initialState = {
   data: null,
+  carrier: null,
 };
 
 const flights = (state = initialState, action) => {
@@ -22,6 +25,11 @@ const flights = (state = initialState, action) => {
         ...state,
         data: null,
         fetching: false,
+      };
+    case CHANGE_CARRIER:
+      return {
+        ...state,
+        carrier: action.payload,
       };
     default:
       return state;
