@@ -1,9 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import { fetchFlights, changeCarrier } from '../actions/flights';
 import FlightSelector from '../components/FlightSelector';
 import FlightCard from '../components/FlightCard';
+import Progress from '../ui/Progress';
+
+const styles = theme => ({
+  card: {
+    padding: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
+  },
+  widget: {
+    width: 500,
+    margin: '0 auto',
+    paddingTop: 10,
+  },
+});
 
 class FlightsWidget extends Component {
   componentDidMount() {
@@ -13,25 +27,30 @@ class FlightsWidget extends Component {
 
   renderFlights() {
     const { flights } = this.props;
-    return flights && flights.map(item => (<FlightCard key={item.id} {...item} />));
+    return flights && flights.map(item => (
+      <FlightCard key={item.id} {...item} />
+    ));
   }
 
   render() {
-    const { carriers, carrier, handleCarrierChange } = this.props;
+    const {
+      carriers, carrier, handleCarrierChange, classes,
+      fetching,
+    } = this.props;
     return (
-      <div className={FlightsWidget.className}>
+      <div className={classes.widget}>
         <FlightSelector
           items={carriers}
           value={carrier}
           handleChange={handleCarrierChange}
+          className={classes.card}
         />
+        { fetching && <Progress />}
         {this.renderFlights()}
       </div>
     );
   }
 }
-
-FlightsWidget.className = 'flights-widget';
 
 FlightsWidget.propTypes = {
   getFlights: PropTypes.func.isRequired,
@@ -39,12 +58,15 @@ FlightsWidget.propTypes = {
   flights: PropTypes.arrayOf(PropTypes.object),
   carriers: PropTypes.arrayOf(PropTypes.string),
   carrier: PropTypes.string,
+  classes: PropTypes.objectOf(PropTypes.string).isRequired,
+  fetching: PropTypes.bool,
 };
 
 FlightsWidget.defaultProps = {
   flights: null,
   carriers: null,
   carrier: null,
+  fetching: false,
 };
 
 const mapStateToProps = (state) => {
@@ -65,4 +87,4 @@ const mapDispatchToProps = dispatch => ({
   handleCarrierChange: event => dispatch(changeCarrier(event.target.value)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FlightsWidget);
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(FlightsWidget));

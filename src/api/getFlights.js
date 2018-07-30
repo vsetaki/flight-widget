@@ -29,6 +29,8 @@ const prepareData = ({ flights }) => flights;
 
 export default function getFlights() {
   return fetch(url)
-    .then(response => response.json())
+    .then(response => new Promise((resolve) => {
+      setTimeout(() => resolve(response.json()), 1000);
+    }))
     .then(prepareData);
 }

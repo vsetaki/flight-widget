@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import FlightIcon from '@material-ui/icons/Flight';
-
-const DEFAULT_CARRIER = 'Все авиакомпании';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Card from '../../ui/Card';
+import { DEFAULT_CARRIER } from '../../constants';
 
 const renderSelectItems = (items) => {
   const defaultItem = (
@@ -29,12 +29,22 @@ const renderSelectItems = (items) => {
   return [defaultItem];
 };
 
-const FlightSelector = ({ value, handleChange, items }) => (
-  <Paper>
+const styles = {
+  label: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+};
+
+const FlightSelector = ({
+  value, handleChange, items, classes,
+}) => (
+  <Card>
     <Grid container spacing={16}>
-      <Grid item xs={4}>
-        <FlightIcon />
-        Авиакомпании
+      <Grid item xs={4} className={classes.label}>
+        <Typography variant="subheading">
+          Авиакомпания:
+        </Typography>
       </Grid>
       <Grid item xs={8}>
         <FormControl fullWidth>
@@ -52,13 +62,14 @@ const FlightSelector = ({ value, handleChange, items }) => (
         </FormControl>
       </Grid>
     </Grid>
-  </Paper>
+  </Card>
 );
 
 FlightSelector.propTypes = {
   value: PropTypes.string,
   handleChange: PropTypes.func,
   items: PropTypes.arrayOf(PropTypes.string),
+  classes: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 FlightSelector.defaultProps = {
@@ -67,4 +78,4 @@ FlightSelector.defaultProps = {
   items: null,
 };
 
-export default FlightSelector;
+export default withStyles(styles)(FlightSelector);
