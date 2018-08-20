@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders component 1`] = `
+<FlightCard
+  arrival="2016-06-08T19:52:27.979Z"
+  carrier="S7"
+  classes={
+    Object {
+      "card": "FlightCard-card-1",
+      "flightIcon": "FlightCard-flightIcon-3",
+      "infoBlock": "FlightCard-infoBlock-2",
+    }
+  }
+  departure="2016-06-08T17:51:20.979Z"
+  direction={
+    Object {
+      "from": "Moscow",
+      "to": "Berlin",
+    }
+  }
+  id={123}
+/>
+`;
